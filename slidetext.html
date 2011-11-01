@@ -3,6 +3,10 @@
 <head>
 <title>UH</title>
 <style type="text/css">
+body {
+    margin: 0;
+    padding: 0;
+}
 .slide h1 {
     font-size: 1.4em;
     margin-top: 0.25em;
@@ -38,6 +42,8 @@
     width: 100%; 
     text-align: center;
     vertical-align: middle;
+    color: white;
+    background-color: black;
 }
 .codewrap {
     text-align: left;
@@ -49,7 +55,7 @@
 $(function() {
 
     var set_text_size = function($slide) {
-        $(".slideshow").css("height", ($(window).height()-20)+"px");
+        $(".slideshow").css("height", ($(window).height())+"px");
         var divw = $(".slideshow").width();
         var divh = $(".slideshow").height();
 
