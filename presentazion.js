@@ -27,7 +27,7 @@ $(function() {
 
         // Enlarge font size until slide fills the container
         // Increment by chunks of 10 to make it faster
-        for ( var fsize = 10; fsize < 1000; fsize+= 10) {
+        for ( var fsize = 10; fsize < 1000; fsize += 10) {
             // Never allow contents to reach container boundaries
             $slide.css("font-size", fsize+"px");
             if ( $slide.width() >= (divw - window_hpadding*2) || $slide.height() >= (divh - window_vpadding*2) ) {
@@ -97,6 +97,7 @@ $(function() {
                 break;
             case 78: // n
                 alert("Current slide: " + (current_slide+1));
+                e.preventDefault();
                 break;
             case 72: // h
                 alert("COMMANDS\n\n"
@@ -106,6 +107,7 @@ $(function() {
                     + "s: search (forward, no wrap)\n"
                     + "h: this help\n"
                 );
+                e.preventDefault();
                 break;
             default:
                 break;
