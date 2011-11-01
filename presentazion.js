@@ -1,6 +1,6 @@
 /* Presentazion
    HTML/JS software to present slides in DWIM way
-   Version 0.10 - November 1st, 2011
+   Version 0.20 - November 1st, 2011
    Author: Michele Beltrame
    License: Artistic (Perl5) or GPL3, at user choice
 */
@@ -9,6 +9,8 @@ $(function() {
     // Pad a bit to avoid  being too near to borders
     // (projectors might cut)
     var window_hpadding = 50; // px
+    // Some vpadding to fix an issue with Chromium
+    var window_vpadding = 50; // px
 
     var current_slide = 0;
     var max_slide = $(".slide").size() - 1;
@@ -27,7 +29,7 @@ $(function() {
         for ( var fsize = 10; fsize < 1000; fsize+= 10) {
             // Never allow contents to reach container boundaries
             $slide.css("font-size", fsize+"px");
-            if ( $slide.width() >= (divw - window_hpadding*2) || $slide.height() >= divh ) {
+            if ( $slide.width() >= (divw - window_hpadding*2) || $slide.height() >= (divh - window_vpadding*2) ) {
                 $slide.css("font-size", (fsize-5)+"px");
                 break;
             }
@@ -102,7 +104,9 @@ $(function() {
                     + "s: search (forward, no wrap)\n"
                     + "h: this help\n"
                 );
+                break;
         }
+        return true; // don't stop other keys to be handled by browser
     });
 
 });
