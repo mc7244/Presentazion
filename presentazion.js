@@ -11,7 +11,7 @@ $(function() {
     var window_hpadding = 50; // px
 
     var current_slide = 0;
-    var max_slide = $(".slide").size()-1;
+    var max_slide = $(".slide").size() - 1;
     $(".slide").hide();
 
     var set_text_size = function() {
@@ -23,18 +23,14 @@ $(function() {
         var divh = $(".slideshow").height();
 
         // Enlarge font size until slide fills the container
-        // Increment by chunks of 5 or it's quite slow
-        // TODO: CHANGE THIS TO BE A FOR
-        var fsize = 10;
-        while (1) {
+        // Increment by chunks of 10 to make it faster
+        for ( var fsize = 10; fsize < 1000; fsize+= 10) {
             // Never allow contents to reach container boundaries
             $slide.css("font-size", fsize+"px");
             if ( $slide.width() >= (divw - window_hpadding*2) || $slide.height() >= divh ) {
                 $slide.css("font-size", (fsize-5)+"px");
                 break;
             }
-            if ( fsize >= 1000 ) { alert("Exception 1"); break; } 
-            fsize+=5;
         }
 
         // Center contents vertically
