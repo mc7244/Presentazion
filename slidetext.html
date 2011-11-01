@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>UH</title>
+<style type="text/css">
+.slide h1 {
+    font-size: 1.4em;
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+}
+.slide h2 {
+    font-size: 1.3em;
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+}
+.slide p {
+    font-size: 1em;
+    margin-top: 0.1em;
+    margin-bottom: 0.1em;
+}
+.slide pre {
+    display: block;
+    font-family: Courier, monospace;
+    font-size: 1em;
+    margin-top: 0.1em;
+    margin-bottom: 0.1em;
+}
+.slide {
+    /* border: 1px solid red; */
+    display: inline-block;
+    width: auto;
+    height: auto;
+    white-space: nowrap;
+}
+.slideshow {
+    /* border: 1px solid black; */
+    height: 100%;
+    width: 100%; 
+    text-align: center;
+    vertical-align: middle;
+}
+.codewrap {
+    text-align: left;
+    display: inline-block;
+}
+</style>
+<script type="text/javascript" src="jquery-1.6.4.min.js"></script>
+<script type="text/javascript">
+$(function() {
+
+    var set_text_size = function($slide) {
+        $(".slideshow").css("height", ($(window).height()-20)+"px");
+        var divw = $(".slideshow").width();
+        var divh = $(".slideshow").height();
+
+        // Enlarge font size until slide fills the container
+        // TODO: CHANGE THIS TO BE A FOR
+        var fsize = 10;
+        while (1) {
+            // Never allow contents to reach container boundaries
+            $slide.css("font-size", fsize+"px");
+            if ( $slide.width() >= divw || $slide.height() >= divh ) {
+                $slide.css("font-size", (fsize-1)+"px");
+                break;
+            }
+            if ( fsize === 1000 ) { alert("Exception 1"); break; } 
+            fsize++;
+        }
+
+        // Center contents vertically
+        $slide.css( "margin-top", ((divh/2)-($slide.height()/2))+"px" );
+    };
+
+    // Wrap code PREs so they're still centered but left-aligned
+    $(".slide pre.code").wrap('<div class="codewrap">');
+
+    $(".slide").hide();
+    $(".slide:first").show();
+    var current_slide = 0;
+    var max_slide = $(".slide").size()-1;
+    // $(window).resize(set_text_size);
+    set_text_size($(".slide:first"));
+
+    $(document).keydown(function(e) {
+        console.warn(e);
+        if (e.keyCode === 34) {
+            if ( current_slide == max_slide ) {
+                return;
+            }
+            $(".slide:eq("+current_slide+")").hide();
+            current_slide++;
+            $(".slide:eq("+current_slide+")").show();
+            set_text_size( $(".slide:eq("+current_slide+")") );
+            e.preventDefault();
+        } else if (e.keyCode === 33) {
+            if ( current_slide == 0 ) {
+                return;
+            }
+            $(".slide:eq("+current_slide+")").hide();
+            current_slide--;
+            $(".slide:eq("+current_slide+")").show();
+            set_text_size( $(".slide:eq("+current_slide+")") );
+            e.preventDefault();
+        }
+    });
+
+});
+</script>
+</head>
+<body>
+<div class="slideshow">
+
+<div class="slide">
+<p>:-D</p>
+</div>
+
+<div class="slide">
+<p>Beautifulllll :-)</p>
+<pre class="code">
+nicely
+fits
+for 
+me
+for
+</pre>
+</div>
+
+</div>
+</body>
+</html>
