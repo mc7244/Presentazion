@@ -55,8 +55,9 @@ $(function() {
     change_slide(0);
 
     $(document).keydown(function(e) {
-        console.warn(e);
         switch (e.keyCode) {
+            case 13: // Enter
+            case 32: // Space
             case 34: // PgDown
                 if ( current_slide == max_slide ) {
                     return;
@@ -64,6 +65,7 @@ $(function() {
                 change_slide( current_slide + 1 );
                 e.preventDefault();
                 break;
+            case 8:  // Backspace
             case 33: // PgUp
                 if ( current_slide == 0 ) {
                     return;
@@ -92,6 +94,14 @@ $(function() {
                 break;
             case 78: // n
                 alert("Current slide: " + (current_slide+1));
+            case 72: // h
+                alert("COMMANDS\n\n"
+                    + "PgDown/Space/Enter: next slide\n"
+                    + "PgUp/Backspace: previous slide\n"
+                    + "j: jump to page\n"
+                    + "s: search (forward, no wrap)\n"
+                    + "h: this help\n"
+                );
         }
     });
 
