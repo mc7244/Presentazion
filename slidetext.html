@@ -60,17 +60,18 @@ $(function() {
         var divh = $(".slideshow").height();
 
         // Enlarge font size until slide fills the container
+        // Increment by chunks of 5 or it's quite slow
         // TODO: CHANGE THIS TO BE A FOR
         var fsize = 10;
         while (1) {
             // Never allow contents to reach container boundaries
             $slide.css("font-size", fsize+"px");
             if ( $slide.width() >= divw || $slide.height() >= divh ) {
-                $slide.css("font-size", (fsize-1)+"px");
+                $slide.css("font-size", (fsize-5)+"px");
                 break;
             }
-            if ( fsize === 1000 ) { alert("Exception 1"); break; } 
-            fsize++;
+            if ( fsize >= 1000 ) { alert("Exception 1"); break; } 
+            fsize+=5;
         }
 
         // Center contents vertically
