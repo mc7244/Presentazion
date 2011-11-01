@@ -15,6 +15,7 @@ $(function() {
     var current_slide = 0;
     var max_slide = $(".slide").size() - 1;
     $(".slide").hide();
+    var last_search = '';
 
     var set_text_size = function() {
         var $slide = $(".slide:eq(" + current_slide + ")");
@@ -84,10 +85,10 @@ $(function() {
                 }
                 break;
             case 83: // s
-                var pattern = prompt("Enter string to search (forward)");
-                var rep = new RegExp(pattern, "i"); // case insensitive
+                last_search = prompt("Enter string to search (forward)", last_search);
+                var pattern = new RegExp(last_search, "i"); // case insensitive
                 $(".slide:gt(" + current_slide + ")").each(function(i, el) {
-                    if ( $(el).text().match(rep) ) {
+                    if ( $(el).text().match(pattern) ) {
                         change_slide( i + 1 );
                         return false;                    
                     }
@@ -96,6 +97,7 @@ $(function() {
                 break;
             case 78: // n
                 alert("Current slide: " + (current_slide+1));
+                break;
             case 72: // h
                 alert("COMMANDS\n\n"
                     + "PgDown/Space/Enter: next slide\n"
@@ -104,6 +106,8 @@ $(function() {
                     + "s: search (forward, no wrap)\n"
                     + "h: this help\n"
                 );
+                break;
+            default:
                 break;
         }
         return true; // don't stop other keys to be handled by browser
