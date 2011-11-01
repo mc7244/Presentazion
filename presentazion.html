@@ -39,6 +39,24 @@
 </ul>
 </div>
 
+<div class="slide">
+<h2>Code example</h2>
+<code>
+package Somewhere;
+use v5.14;
+use Moose;
+
+extends Nowhere;
+
+has place => ( is => 'rw' );
+
+sub where_are_you {
+    my $self = shift;
+    say "I am in " . $self->place;
+}
+</code>
+</div>
+
 </div>
 </body>
 </html>

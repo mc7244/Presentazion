@@ -1,3 +1,10 @@
+/* Presentazion
+   HTML/JS software to present slides in DWIM way
+   Version 0.10 - November 1st, 2011
+   Author: Michele Beltrame
+   License: Artistic (Perl5) or GPL3, at user choice
+*/
+
 $(function() {
     // Pad a bit to avoid  being too near to borders
     // (projectors might cut)
