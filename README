@@ -1,0 +1,13 @@
+Presentazion 0.10
+
+Do-What-I-Mean software to create presentation slides and display
+them using a web browser.
+
+FEATURES & GOALS:
+    see presentazion.html
+
+TODO:
+    - improve search (wrap, backwards, ...)
+    - mouse navigation
+    - PDF export
+
