@@ -11,14 +11,15 @@ $(function() {
     var window_hpadding = 50; // px
     // Some vpadding to fix an issue with Chromium
     var window_vpadding = 50; // px
+    // Keep this not too small, so calculation is faster
+    var font_step = 10;
 
     var current_slide = 0;
     var max_slide = $(".slide").size() - 1;
-    $(".slide").hide();
     var last_search = '';
 
-    var set_text_size = function() {
-        var $slide = $(".slide:eq(" + current_slide + ")");
+    var set_text_size = function(nslide) {
+        var $slide = $(".slide:eq(" + nslide + ")");
 
         $(".slideshow").css("width", ($(window).width())+"px");
         $(".slideshow").css("height", ($(window).height())+"px");
@@ -27,11 +28,15 @@ $(function() {
 
         // Enlarge font size until slide fills the container
         // Increment by chunks of 10 to make it faster
-        for ( var fsize = 10; fsize < 1000; fsize += 10) {
+        for ( var fsize = 10; fsize < 1000; fsize += font_step) {
             // Never allow contents to reach container boundaries
             $slide.css("font-size", fsize+"px");
+            /*$slide.text($(window).width() + " --- " + $(window).height() + " <br> " + $slide.css("font-size")
+                + "<br>" + $slide.width() + " --- " + $slide.height()
+            ); // TMP*/
+            
             if ( $slide.width() >= (divw - window_hpadding*2) || $slide.height() >= (divh - window_vpadding*2) ) {
-                $slide.css("font-size", (fsize-5)+"px");
+                $slide.css("font-size", (fsize-font_step)+"px");
                 break;
             }
         }
@@ -40,12 +45,44 @@ $(function() {
         $slide.css( "margin-top", ((divh/2)-($slide.height()/2))+"px" );
     };
 
+    var set_print_text_size = function(nslide) {
+        var divw = $(".slide").width();
+        var divh = $(".slide").height();
+
+        $(".slide").each(function(i, el) {
+            // Enlarge font size until slide fills the container
+            // Increment by chunks of 10 to make it faster
+            var $slide = $(el);
+            $slide.wrapInner('<div class="innerslide" style="display:inline-block;width:auto;height:auto;">');
+            var $innerslide = $slide.children(".innerslide");
+            for ( var fsize = 10; fsize < 1000; fsize += font_step) {
+                // Never allow contents to reach container boundaries
+                $innerslide.css("font-size", fsize+"px");
+                
+                if ( $innerslide.width() >= (divw - window_hpadding*2) || $innerslide.height() >= (divh - window_vpadding*2) ) {
+                    $innerslide.css("font-size", (fsize-font_step)+"px");
+                    break;
+                }
+            }
+            console.log($innerslide.width() + " --- " + $innerslide.height());
+            // Center contents vertically
+            $innerslide.css( "margin-top", ((divh/2)-($innerslide.height()/2))+"px" );
+        });
+    };
+
     var change_slide = function(num) {
         $(".slide:eq(" + current_slide + ")").hide();
         current_slide = num;
         $(".slide:eq(" + current_slide + ")").show();
-        set_text_size();
+        set_text_size(current_slide);
     }
+
+    // Printing
+    if ( $("#mediatype").css("width") === "2px" ) {
+        set_print_text_size();
+        return;
+    }
+    $(".slide").hide();
 
     // Wrap CODE contents into PREs, and replace the CODE tag with a div
     // (so it doesn't bring "custom" formatting with it)
@@ -54,7 +91,9 @@ $(function() {
 
     $(".slide ul").wrap('<div class="ulwrapper">');
 
-    $(window).resize(set_text_size);
+    $(window).resize(function() {
+        set_text_size(current_slide);
+    });
     change_slide(0);
 
     $(document).keydown(function(e) {

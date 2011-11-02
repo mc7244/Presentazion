@@ -1,6 +1,8 @@
 body {
     margin: 0;
     padding: 0;
+    width: 1600px;
+    height: 1200px;
 }
 .slide h1 {
     font-size: 1.4em;
@@ -26,13 +28,15 @@ body {
 }
 .slide {
     /* border: 1px solid red; */
+    width: 1600px;
+    height: 1200px;
+    page-break-after: always;
     display: inline-block;
-    width: auto;
-    height: auto;
     white-space: nowrap;
+    background-color: black;
 }
 .slideshow {
-    /* border: 1px solid black; */
+    /*border: 1px solid black;*/
     margin: auto;
     text-align: center;
     vertical-align: middle;
@@ -49,5 +53,5 @@ body {
 }
 #mediatype {
     display: none;
-    width: 1px;
+    width: 2px;
 }
