@@ -1,6 +1,7 @@
 /* Presentazion
    HTML/JS software to present slides in DWIM way
-   Version 0.20 - November 1st, 2011
+   Version 0.30 - November 2nd, 2011
+   First released on November 1st, 2011
    Author: Michele Beltrame
    License: Artistic (Perl5) or GPL3, at user choice
 */
@@ -78,6 +79,7 @@ $(function() {
     // (so it doesn't bring "custom" formatting with it)
     $(".slide code").wrapInner('<pre>');
     $(".slide code").replaceWith('<div class="codewrapper">' + $(".slide code").html() + "</div>");
+    // Wrap ULs
     $(".slide ul").wrap('<div class="ulwrapper">');
 
     // Printing

@@ -1,4 +1,4 @@
-Presentazion 0.10
+Presentazion 0.30
 
 Do-What-I-Mean software to create presentation slides and display
 them using a web browser.
@@ -9,8 +9,13 @@ USAGE:
 FEATURES & GOALS:
     see presentazion.html
 
+PDF EXPORT:
+    run pdfexport.sh - you need wkhtmltopdf
+    Works as it should, even though for not a single resolution is
+    supported (but you can tweak the script and the CSS to change that)
+
 TODO:
     - improve search (wrap, backwards, ...)
     - mouse navigation
-    - PDF export
+    - improve PDF export (resolution choice, ...)
 
