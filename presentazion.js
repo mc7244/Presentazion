@@ -31,9 +31,6 @@ $(function() {
         for ( var fsize = 10; fsize < 1000; fsize += font_step) {
             // Never allow contents to reach container boundaries
             $slide.css("font-size", fsize+"px");
-            /*$slide.text($(window).width() + " --- " + $(window).height() + " <br> " + $slide.css("font-size")
-                + "<br>" + $slide.width() + " --- " + $slide.height()
-            ); // TMP*/
             
             if ( $slide.width() >= (divw - window_hpadding*2) || $slide.height() >= (divh - window_vpadding*2) ) {
                 $slide.css("font-size", (fsize-font_step)+"px");
@@ -77,19 +74,18 @@ $(function() {
         set_text_size(current_slide);
     }
 
+    // Wrap CODE contents into PREs, and replace the CODE tag with a div
+    // (so it doesn't bring "custom" formatting with it)
+    $(".slide code").wrapInner('<pre>');
+    $(".slide code").replaceWith('<div class="codewrapper">' + $(".slide code").html() + "</div>");
+    $(".slide ul").wrap('<div class="ulwrapper">');
+
     // Printing
     if ( $("#mediatype").css("width") === "2px" ) {
         set_print_text_size();
         return;
     }
     $(".slide").hide();
-
-    // Wrap CODE contents into PREs, and replace the CODE tag with a div
-    // (so it doesn't bring "custom" formatting with it)
-    $(".slide code").wrapInner('<pre>');
-    $(".slide code").replaceWith('<div class="codewrapper">' + $(".slide code").html() + "</div>");
-
-    $(".slide ul").wrap('<div class="ulwrapper">');
 
     $(window).resize(function() {
         set_text_size(current_slide);
