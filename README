@@ -1,4 +1,10 @@
-Presentazion 0.30
+Presentazion
+   HTML/JS software to present slides in DWIM way
+   Version 0.30 - November 2nd, 2011
+   First released on November 1st, 2011
+   Author: Michele Beltrame
+   License: Artistic (Perl5) or GPL3, at user choice
+
 
 Do-What-I-Mean software to create presentation slides and display
 them using a web browser.
