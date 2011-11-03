@@ -79,8 +79,9 @@ $(function() {
     // (so it doesn't bring "custom" formatting with it)
     $(".slide code").wrapInner('<pre>');
     $(".slide code").replaceWith('<div class="codewrapper">' + $(".slide code").html() + "</div>");
-    // Wrap ULs
+    // Wrap ULs and OLs
     $(".slide ul").wrap('<div class="ulwrapper">');
+    $(".slide ol").wrap('<div class="olwrapper">');
 
     // Printing
     if ( $("#mediatype").css("width") === "2px" ) {
