@@ -99,6 +99,7 @@ $(function() {
             case 13: // Enter
             case 32: // Space
             case 34: // PgDown
+            case 39: // Right
                 if ( current_slide == max_slide ) {
                     return;
                 }
@@ -107,6 +108,7 @@ $(function() {
                 break;
             case 8:  // Backspace
             case 33: // PgUp
+            case 37: // Left
                 if ( current_slide == 0 ) {
                     return;
                 }
@@ -138,8 +140,8 @@ $(function() {
                 break;
             case 72: // h
                 alert("COMMANDS\n\n"
-                    + "PgDown/Space/Enter: next slide\n"
-                    + "PgUp/Backspace: previous slide\n"
+                    + "PgDown/Space/Enter/Right: next slide\n"
+                    + "PgUp/Backspace/Left: previous slide\n"
                     + "j: jump to page\n"
                     + "s: search (forward, no wrap)\n"
                     + "h: this help\n"
