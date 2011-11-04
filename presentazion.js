@@ -78,10 +78,9 @@ $(function() {
     // Wrap CODE contents into PREs, and replace the CODE tag with a div
     // (so it doesn't bring "custom" formatting with it)
     $(".slide code").each(function(i, el) {
-        $(el).wrapInner('<pre>');
-        $(el).replaceWith('<div class="codewrapper">' + $(el).html() + "</div>");
+        $(el).replaceWith('<div class="codewrapper"><pre>' + $(el).html() + "</pre></div>");
     });
-    
+
     // Wrap ULs and OLs
     $(".slide ul").wrap('<div class="ulwrapper">');
     $(".slide ol").wrap('<div class="olwrapper">');
