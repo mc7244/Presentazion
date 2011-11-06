@@ -1,6 +1,6 @@
 /* Presentazion
    HTML/JS software to present slides in DWIM way
-   Version 0.50 - November 2nd, 2011
+   Version 0.50 - November 6th, 2011
    First released on November 1st, 2011
    Author: Michele Beltrame
    License: Artistic (Perl5) or GPL3, at user choice
@@ -108,6 +108,9 @@ Presentazion = {
         $(".slide ol").wrap('<div class="olwrapper">');
     },
 
+    // Convert less-verbose multislides into slides
+    // This code should be BURNED and rewritten, but I'd like
+    // to get things to work before
     preprocess_multislides : function() {
         $(".multislide").each(function(i, el) {
             // Split multislide on separators
@@ -121,15 +124,12 @@ Presentazion = {
 
                 // Process lines
                 var lines = shtml.split("\n");
-                //var nlastline = lines.length - 1;
-                //var j = 0;
-                var in_code = 0;
-                //while ( j <= nlastline ) {
+                var in_code = 0; var in_ul = 0; var in_ol = 0;
                 $.each(lines, function(j, line) {
                     // If a line begins with at least a \s, then it's code
                     // and it's subsequents are as well, if they still begin with \s
-                    if ( lines[j].match(/^(?:\s{4}|\t)/) ) {
-                        lines[j] = lines[j].replace(/^(?:\s{4}|\t)/, "");
+                    if ( line.match(/^(?:\s{4}|\t)/) ) {
+                        lines[j] = line.replace(/^(?:\s{4}|\t)/, "");
                         if ( !in_code ) {
                             lines[j] = '<div class="codewrapper"><pre>' + "\n" + lines[j];
                             in_code = 1;
@@ -146,15 +146,56 @@ Presentazion = {
                         }
                     }
 
+                    // ULs
+                    if ( line.match(/^\*\s/) ) {
+                        lines[j] = line.replace(/^\*\s/, "");
+                        lines[j] = "<li>" + lines[j] + "</li>";
+                        if ( !in_ul ) {
+                            lines[j] = '<ul>' + "\n" + lines[j];
+                            in_ul = 1;
+                        }
+                        return true;
+                    } else {
+                        if ( in_ul ) {
+                            lines[j] += "\n" + '</ul>';
+                            in_ul = 0;
+                            return true;
+                        }
+                    }
+
+
+                    // OLs
+                    if ( line.match(/^\#\s/) ) {
+                        lines[j] = line.replace(/^\#\s/, "");
+                        lines[j] = "<li>" + lines[j] + "</li>";
+                        if ( !in_ol ) {
+                            lines[j] = '<ol>' + "\n" + lines[j];
+                            in_ol = 1;
+                        }
+                        return true;
+                    } else {
+                        if ( in_ol ) {
+                            lines[j] += "\n" + '</ol>';
+                            in_ol = 0;
+                            return true;
+                        }
+                    }
+
                     // Wrap lonesome lines in <p>
                     // a lonesome lines does not begin with (<) (TODO: improve this)
-                    if ( !lines[j].match("^<") ) {
-                        lines[j] = "<p>" + lines[j] + "</p>";
+                    if ( !line.match("^<") ) {
+                        lines[j] = "<p>" + line + "</p>";
                     }
                 });
                 // If we closed with code, then add closing tags
                 if ( in_code ) {
                     lines[lines.length-1] += "\n</pre></div>";
+                }
+                if ( in_ul ) {
+                    lines[lines.length-1] += "\n</ul>";
+                }
+                if ( in_ol ) {
+                    lines[lines.length-1] += "\n</ol>";
                 }
 
                 // Add to the dOM
