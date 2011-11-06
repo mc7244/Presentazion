@@ -1,6 +1,6 @@
 /* Presentazion
    HTML/JS software to present slides in DWIM way
-   Version 0.30 - November 2nd, 2011
+   Version 0.50 - November 2nd, 2011
    First released on November 1st, 2011
    Author: Michele Beltrame
    License: Artistic (Perl5) or GPL3, at user choice
@@ -16,10 +16,14 @@ Presentazion = {
     font_step       : 10,
 
     init : function() {
+        // Convert multislides to normal slides
+        this.preprocess_multislides();
+
         this.current_slide = 0,
         this.max_slide = $(".slide").size() - 1;
         this.last_search = '';
 
+        // Tweak contents so they appear as we want
         this.preprocess_slides_contents();
 
         // Printing
@@ -98,12 +102,53 @@ Presentazion = {
         // Wrap CODE contents into PREs, and replace the CODE tag with a div
         // (so it doesn't bring "custom" formatting with it)
         $(".slide code").each(function(i, el) {
-            $(el).replaceWith('<div class="codewrapper"><pre>' + $(el).html() + "</pre></div>");
+            $(el).replaceWith('<div class="codewrapper"><pre>' + $(el).html() + '</pre></div>');
         });
 
         // Wrap ULs and OLs
         $(".slide ul").wrap('<div class="ulwrapper">');
         $(".slide ol").wrap('<div class="olwrapper">');
+    },
+
+    preprocess_multislides : function() {
+        $(".multislide").each(function(i, el) {
+            // Split multislide on separators
+            var slides_html = $(el).html().split(/\n+----\n+/);
+
+            // Process slide
+            $.each(slides_html, function(i, shtml) {
+                // Remove leading and trailing newlines as most are
+                // unwanted (after the <div> tag for instance)
+                shtml = shtml.replace(/^\n/, "").replace(/\n$/, "");
+
+                // Process lines
+                var lines = shtml.split("\n");
+                var nlastline = lines.length - 1;
+                var j = 0;
+                while ( j <= nlastline ) {
+                    // If a line begins with at least a \s, then it's code
+                    // and it's subsequents are as well, if they still begin with \s
+                    if ( lines[j].match(/^\s+/) ) {
+                        lines[j] = lines[j].replace(/^\s+/, "");
+                        lines[j] = '<div class="codewrapper"><pre>' + lines[j] + '</pre></div>';
+                    }
+
+                    // Wrap lonesome lines in <p>
+                    // a lonesome lines does not begin with (<) (TODO: improve this)
+                    if ( !lines[j].match("^<") ) {
+                        lines[j] = "<p>" + lines[j] + "</p>";
+                    }
+                    j++;
+                }
+
+                // Add to the dOM
+                $(".multislide").before('<div class="slide">' + lines.join("\n") + '</div>');
+            });
+
+            // Remove multislide from the DOM, we don't need it anymore
+            $(".multislide").remove();
+        });
+        
     },
 
     bind_keyboard_events : function() {
