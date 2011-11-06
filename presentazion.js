@@ -85,7 +85,6 @@ Presentazion = {
                     break;
                 }
             }
-            console.log($innerslide.width() + " --- " + $innerslide.height());
             // Center contents vertically
             $innerslide.css( "margin-top", ((divh/2)-($innerslide.height()/2))+"px" );
         });
@@ -123,14 +122,29 @@ Presentazion = {
 
                 // Process lines
                 var lines = shtml.split("\n");
-                var nlastline = lines.length - 1;
-                var j = 0;
-                while ( j <= nlastline ) {
+                //var nlastline = lines.length - 1;
+                //var j = 0;
+                var in_code = 0;
+                //while ( j <= nlastline ) {
+                $.each(lines, function(j, line) {
                     // If a line begins with at least a \s, then it's code
                     // and it's subsequents are as well, if they still begin with \s
-                    if ( lines[j].match(/^\s+/) ) {
-                        lines[j] = lines[j].replace(/^\s+/, "");
-                        lines[j] = '<div class="codewrapper"><pre>' + lines[j] + '</pre></div>';
+                    if ( lines[j].match(/^\s{4}/) ) {
+                        lines[j] = lines[j].replace(/^\s{4}/, "");
+                        if ( !in_code ) {
+                            lines[j] = '<div class="codewrapper"><pre>' + "\n" + lines[j];
+                            in_code = 1;
+                        }
+                        return true;
+                    } else {
+                        if ( in_code && line == "" ) {
+                            return; // Code separation
+                        }
+                        if ( in_code ) {
+                            lines[j] += "\n" + '</pre></div>';
+                            in_code = 0;
+                            return true;
+                        }
                     }
 
                     // Wrap lonesome lines in <p>
@@ -138,7 +152,10 @@ Presentazion = {
                     if ( !lines[j].match("^<") ) {
                         lines[j] = "<p>" + lines[j] + "</p>";
                     }
-                    j++;
+                });
+                // If we closed with code, then add closing tags
+                if ( in_code ) {
+                    lines[lines.length-1] += "\n</pre></div>";
                 }
 
                 // Add to the dOM
