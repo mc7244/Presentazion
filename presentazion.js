@@ -9,7 +9,7 @@
 Presentazion = {
     // Pad a bit to avoid  being too near to borders
     // (projectors might cut)
-    window_hpadding : 50,
+    window_hpadding : 100,
     // Some vpadding to fix an issue with Chromium
     window_vpadding : 50, // px
     // Keep this not too small, so calculation is faster
@@ -26,14 +26,13 @@ Presentazion = {
         // Tweak contents so they appear as we want
         this.preprocess_slides_contents();
 
-        // Printing
+        // TASK: printing
         if ( $("#mediatype").css("width") === "2px" ) {
             this.set_print_text_size();
             return;
-        
         }
 
-        // Presenting
+        // TASK: presenting
         $(".slide").hide();
         this.bind_keyboard_events();
         $(window).resize($.proxy(function() {
@@ -70,24 +69,24 @@ Presentazion = {
         var divw = $(".slide").width();
         var divh = $(".slide").height();
 
-        $(".slide").each(function(i, el) {
+        $(".slide").each($.proxy(function(i, el) {
             // Enlarge font size until slide fills the container
             // Increment by chunks of 10 to make it faster
             var $slide = $(el);
             $slide.wrapInner('<div class="innerslide" style="display:inline-block;width:auto;height:auto;">');
             var $innerslide = $slide.children(".innerslide");
-            for ( var fsize = 10; fsize < 1000; fsize += font_step) {
+            for ( var fsize = 10; fsize < 1000; fsize += this.font_step) {
                 // Never allow contents to reach container boundaries
                 $innerslide.css("font-size", fsize+"px");
-                
-                if ( $innerslide.width() >= (divw - window_hpadding*2) || $innerslide.height() >= (divh - window_vpadding*2) ) {
-                    $innerslide.css("font-size", (fsize-font_step)+"px");
+               
+                if ( $innerslide.width() >= (divw - this.window_hpadding*2) || $innerslide.height() >= (divh - this.window_vpadding*2) ) {
+                    $innerslide.css("font-size", (fsize - this.font_step)+"px");
                     break;
                 }
             }
             // Center contents vertically
             $innerslide.css( "margin-top", ((divh/2)-($innerslide.height()/2))+"px" );
-        });
+        }, this));
     },
 
     change_slide : function(num) {
@@ -201,9 +200,10 @@ Presentazion = {
                 case 83: // s
                     this.last_search = prompt("Enter string to search (forward)", this.last_search);
                     var pattern = new RegExp(this.last_search, "i"); // case insensitive
+                    console.info(this.current_slide);
                     $(".slide:gt(" + this.current_slide + ")").each($.proxy(function(i, el) {
                         if ( $(el).text().match(pattern) ) {
-                            this.change_slide( i + 1 );
+                            this.change_slide( this.current_slide + i + 1 );
                             return false;                    
                         }
                     },this));

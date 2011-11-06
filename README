@@ -15,6 +15,7 @@ USAGE:
 SLIDES CREATION:
     see source code
     Multislides: see wiki page on github for specs
+      Multislides is EXPERIMENTAL and specs could change!
 
 FEATURES & GOALS:
     see presentazion.html
@@ -23,6 +24,10 @@ PDF EXPORT:
     run pdfexport.sh - you need wkhtmltopdf
     Works as it should, even though at presentt a single resolution is
     supported (but you can tweak the script and the CSS to change that)
+
+    If you see weird output, comment out the sceen CSS <link> tag: for some
+    reason wkhtmltopdf still uses that even if you tell it to use the
+    print CSS (sik).
 
 TODO:
     - improve search (wrap, backwards, ...)
