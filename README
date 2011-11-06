@@ -1,6 +1,6 @@
 Presentazion
    HTML/JS software to present slides in DWIM way
-   Version 0.30 - November 2nd, 2011
+   Version 0.50 - November 2nd, 2011
    First released on November 1st, 2011
    Author: Michele Beltrame
    License: Artistic (Perl5) or GPL3, at user choice
@@ -12,6 +12,11 @@ them using a web browser.
 USAGE:
     open presentazion.html and press "h"
 
+SLIDES CREATION:
+    see source code
+    Multislides: see wiki page on github for specs
+      Multislides is EXPERIMENTAL and specs could change!
+
 FEATURES & GOALS:
     see presentazion.html
 
@@ -19,6 +24,10 @@ PDF EXPORT:
     run pdfexport.sh - you need wkhtmltopdf
     Works as it should, even though at presentt a single resolution is
     supported (but you can tweak the script and the CSS to change that)
+
+    If you see weird output, comment out the sceen CSS <link> tag: for some
+    reason wkhtmltopdf still uses that even if you tell it to use the
+    print CSS (sik).
 
 TODO:
     - improve search (wrap, backwards, ...)
