@@ -200,7 +200,6 @@ Presentazion = {
                 case 83: // s
                     this.last_search = prompt("Enter string to search (forward)", this.last_search);
                     var pattern = new RegExp(this.last_search, "i"); // case insensitive
-                    console.info(this.current_slide);
                     $(".slide:gt(" + this.current_slide + ")").each($.proxy(function(i, el) {
                         if ( $(el).text().match(pattern) ) {
                             this.change_slide( this.current_slide + i + 1 );
