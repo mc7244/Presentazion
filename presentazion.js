@@ -129,8 +129,8 @@ Presentazion = {
                 $.each(lines, function(j, line) {
                     // If a line begins with at least a \s, then it's code
                     // and it's subsequents are as well, if they still begin with \s
-                    if ( lines[j].match(/^\s{4}/) ) {
-                        lines[j] = lines[j].replace(/^\s{4}/, "");
+                    if ( lines[j].match(/^(?:\s{4}|\t)/) ) {
+                        lines[j] = lines[j].replace(/^(?:\s{4}|\t)/, "");
                         if ( !in_code ) {
                             lines[j] = '<div class="codewrapper"><pre>' + "\n" + lines[j];
                             in_code = 1;
