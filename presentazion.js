@@ -9,11 +9,9 @@
 Presentazion = {
     // Pad a bit to avoid  being too near to borders
     // (projectors might cut)
-    window_hpadding : 100,
+    window_hpadding : 50, // px
     // Some vpadding to fix an issue with Chromium
     window_vpadding : 50, // px
-    // Keep this not too small, so calculation is faster
-    font_step       : 10,
 
     init : function() {
         // Convert multislides to normal slides
@@ -50,15 +48,26 @@ Presentazion = {
         var divh = $(".slideshow").height();
 
         // Enlarge font size until slide fills the container
-        // Increment by chunks of 10 to make it faster
-        for ( var fsize = 10; fsize < 1000; fsize += this.font_step) {
-            // Never allow contents to reach container boundaries
+        // We begin by 10-px steps, to be way faster, and then
+        // be more precise as we get near to the page boundaries
+        var font_step = 10;
+        var fsize = 10;
+        while ( true ) {
             $slide.css("font-size", fsize+"px");
             
+            // If we cross the boundary, return to previous size and
+            // decrement the font_step (so at next cycles we can try
+            // to go closer)
             if ( $slide.width() >= (divw - this.window_hpadding*2) || $slide.height() >= (divh - this.window_vpadding*2) ) {
-                $slide.css("font-size", (fsize - this.font_step)+"px");
-                break;
+                fsize -= font_step;
+                $slide.css("font-size", fsize+"px");
+                if ( font_step === 1 ) {
+                    // We're at the end
+                    break;
+                }
+                font_step--;
             }
+            fsize += font_step;
         }
 
         // Center contents vertically
@@ -75,14 +84,23 @@ Presentazion = {
             var $slide = $(el);
             $slide.wrapInner('<div class="innerslide" style="display:inline-block;width:auto;height:auto;">');
             var $innerslide = $slide.children(".innerslide");
-            for ( var fsize = 10; fsize < 1000; fsize += this.font_step) {
-                // Never allow contents to reach container boundaries
+            
+            // See set_text_sixe() for explanations
+            var font_step = 10;
+            var fsize = 10;
+            while ( true ) {
                 $innerslide.css("font-size", fsize+"px");
                
                 if ( $innerslide.width() >= (divw - this.window_hpadding*2) || $innerslide.height() >= (divh - this.window_vpadding*2) ) {
-                    $innerslide.css("font-size", (fsize - this.font_step)+"px");
-                    break;
+                    fsize -= font_step;
+                    $innerslide.css("font-size", fsize+"px");
+                    if ( font_step === 1 ) {
+                        // We're at the end
+                        break;
+                    }
+                    font_step--;
                 }
+                fsize += font_step;
             }
             // Center contents vertically
             $innerslide.css( "margin-top", ((divh/2)-($innerslide.height()/2))+"px" );
