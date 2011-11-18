@@ -45,29 +45,7 @@ Presentazion = {
         var divh = $(".slideshow").height();
 
         this.autoset_font_size($slide, divw, divh);
-/*        // Enlarge font size until slide fills the container
-        // We begin with 10-px steps, to be way faster, and then
-        // be more precise as we get near to the page boundaries
-        var font_step = 10;
-        var fsize = 10;
-        while ( true ) {
-            $slide.css("font-size", fsize+"px");
-            
-            // If we cross the boundary, return to previous size and
-            // decrement the font_step (so at next cycles we can try
-            // to go closer)
-            if ( $slide.width() >= (divw - this.slide_hpadding*2) || $slide.height() >= (divh - this.slide_vpadding*2) ) {
-                fsize -= font_step;
-                $slide.css("font-size", fsize+"px");
-                if ( font_step === 1 ) {
-                    // We're at the end
-                    break;
-                }
-                font_step--;
-            }
-            fsize += font_step;
-        }
-*/
+
         // Center contents vertically
         $slide.css( "margin-top", ((divh/2)-($slide.height()/2))+"px" );
     },
@@ -84,24 +62,7 @@ Presentazion = {
             var $innerslide = $slide.children(".innerslide");
 
             this.autoset_font_size($innerslide, divw, divh);
-/*
-            // See set_text_sixe() for explanations
-            var font_step = 10;
-            var fsize = 10;
-            while ( true ) {
-                $innerslide.css("font-size", fsize+"px");
-               
-                if ( $innerslide.width() >= (divw - this.slide_hpadding*2) || $innerslide.height() >= (divh - this.slide_vpadding*2) ) {
-                    fsize -= font_step;
-                    $innerslide.css("font-size", fsize+"px");
-                    if ( font_step === 1 ) {
-                        // We're at the end
-                        break;
-                    }
-                    font_step--;
-                }
-                fsize += font_step;
-            } */
+
             // Center contents vertically
             $innerslide.css( "margin-top", ((divh/2)-($innerslide.height()/2))+"px" );
         }, this));
@@ -142,6 +103,12 @@ Presentazion = {
 
                 // Process lines
                 var lines = shtml.split("\n");
+
+                // Remove comment lines
+                lines = $.grep(lines, function(line) {
+                    return line.match(/^\/\//);
+                }, true);
+
                 var in_code = 0; var in_ul = 0; var in_ol = 0;
                 $.each(lines, function(j, line) {
                     // If a line begins with at least a \s, then it's code
@@ -216,7 +183,7 @@ Presentazion = {
                     lines[lines.length-1] += "\n</ol>";
                 }
 
-                // Add to the dOM
+                // Add to the DOM
                 $(".multislide").before('<div class="slide">' + lines.join("\n") + '</div>');
             });
 

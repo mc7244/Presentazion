@@ -1,4 +1,4 @@
-Version 0.60 - 2011-11-xx
+Version 0.60 - 2011-11-18
     - Calculation of font size is now much more precise
     - Padding settings now moved to CSS file, so they can be
         * customized without changing the JS file
@@ -6,6 +6,9 @@ Version 0.60 - 2011-11-xx
     - Fixed ULs and OLs so list markers are inside the div and
       there's no risk of them crossing boundaries
     - Some code refactoring/optimization
+    - Allow comments in multislides (lines beginning with //
+      are ignored). Took the idea from a fork by stevan, but
+      implemented it differently.
 
 Version 0.50 - 2011-11-06
     Initial release
