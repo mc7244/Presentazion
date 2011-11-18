@@ -7,17 +7,14 @@
 */
 
 Presentazion = {
-    // Pad a bit to avoid  being too near to borders
-    // (projectors might cut)
-    window_hpadding : 50, // px
-    // Some vpadding to fix an issue with Chromium
-    window_vpadding : 50, // px
-
     init : function() {
+        this.slide_vpadding = parseInt( $("#mediatype").css("padding-top") );
+        this.slide_hpadding = parseInt( $("#mediatype").css("padding-left") );
+
         // Convert multislides to normal slides
         this.preprocess_multislides();
 
-        this.current_slide = 0,
+        this.current_slide = 0;
         this.max_slide = $(".slide").size() - 1;
         this.last_search = '';
 
@@ -58,7 +55,7 @@ Presentazion = {
             // If we cross the boundary, return to previous size and
             // decrement the font_step (so at next cycles we can try
             // to go closer)
-            if ( $slide.width() >= (divw - this.window_hpadding*2) || $slide.height() >= (divh - this.window_vpadding*2) ) {
+            if ( $slide.width() >= (divw - this.slide_hpadding*2) || $slide.height() >= (divh - this.slide_vpadding*2) ) {
                 fsize -= font_step;
                 $slide.css("font-size", fsize+"px");
                 if ( font_step === 1 ) {
@@ -91,7 +88,7 @@ Presentazion = {
             while ( true ) {
                 $innerslide.css("font-size", fsize+"px");
                
-                if ( $innerslide.width() >= (divw - this.window_hpadding*2) || $innerslide.height() >= (divh - this.window_vpadding*2) ) {
+                if ( $innerslide.width() >= (divw - this.slide_hpadding*2) || $innerslide.height() >= (divh - this.slide_vpadding*2) ) {
                     fsize -= font_step;
                     $innerslide.css("font-size", fsize+"px");
                     if ( font_step === 1 ) {

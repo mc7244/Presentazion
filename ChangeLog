@@ -1,0 +1,8 @@
+Version 0.60 - 2011-11-xx
+    - Calculation of font size is now much more precise
+    - Padding settings now moved to CSS file, so they can be
+        * customized without changing the JS file
+        * be different from screen to PDF/print version
+
+Version 0.50 - 2011-11-06
+    Initial release

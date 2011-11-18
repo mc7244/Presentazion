@@ -53,5 +53,7 @@ body {
 }
 #mediatype {
     display: none;
-    width: 1px;
+    width: 1px; /* Do not touch */
+    padding-top: 50px; /* only px supported */
+    padding-left: 50px; /* only px supported */
 }

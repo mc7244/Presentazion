@@ -1,8 +1,8 @@
 body {
     margin: 0;
     padding: 0;
-    width: 1600px;
-    height: 1200px;
+    width: 1600px; /* only px supported */
+    height: 1200px; /* only px supported */
 }
 .slide h1 {
     font-size: 1.4em;
@@ -57,5 +57,7 @@ body {
 }
 #mediatype {
     display: none;
-    width: 2px;
+    width: 2px; /* Do not touch */
+    padding-top: 50px; /* only px supported */
+    padding-left: 50px; /* only px supported */
 }
