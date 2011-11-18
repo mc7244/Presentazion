@@ -9,6 +9,8 @@ Version 0.60 - 2011-11-18
     - Allow comments in multislides (lines beginning with //
       are ignored). Took the idea from a fork by stevan, but
       implemented it differently.
+    - Fixed a bug which didn't allow to have multiple
+      multislides in one presentation (thanks stevan)
 
 Version 0.50 - 2011-11-06
     Initial release
