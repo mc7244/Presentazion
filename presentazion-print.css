@@ -55,6 +55,12 @@ body {
     text-align: left;
     display: inline-block;
 }
+ol li {
+    list-style-position: inside;
+}
+ul li {
+    list-style-position: inside;
+}
 #mediatype {
     display: none;
     width: 2px; /* Do not touch */

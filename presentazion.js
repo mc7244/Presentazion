@@ -44,8 +44,9 @@ Presentazion = {
         var divw = $(".slideshow").width();
         var divh = $(".slideshow").height();
 
-        // Enlarge font size until slide fills the container
-        // We begin by 10-px steps, to be way faster, and then
+        this.autoset_font_size($slide, divw, divh);
+/*        // Enlarge font size until slide fills the container
+        // We begin with 10-px steps, to be way faster, and then
         // be more precise as we get near to the page boundaries
         var font_step = 10;
         var fsize = 10;
@@ -66,7 +67,7 @@ Presentazion = {
             }
             fsize += font_step;
         }
-
+*/
         // Center contents vertically
         $slide.css( "margin-top", ((divh/2)-($slide.height()/2))+"px" );
     },
@@ -81,7 +82,9 @@ Presentazion = {
             var $slide = $(el);
             $slide.wrapInner('<div class="innerslide" style="display:inline-block;width:auto;height:auto;">');
             var $innerslide = $slide.children(".innerslide");
-            
+
+            this.autoset_font_size($innerslide, divw, divh);
+/*
             // See set_text_sixe() for explanations
             var font_step = 10;
             var fsize = 10;
@@ -98,7 +101,7 @@ Presentazion = {
                     font_step--;
                 }
                 fsize += font_step;
-            }
+            } */
             // Center contents vertically
             $innerslide.css( "margin-top", ((divh/2)-($innerslide.height()/2))+"px" );
         }, this));
@@ -283,6 +286,31 @@ Presentazion = {
             }
             return true; // don't stop other keys to be handled by browser
         }, this));
+    },
+
+    autoset_font_size : function($inner, outer_divw, outer_divh) {
+        // Enlarge font size until slide fills the container
+        // We begin with 10-px steps, to be way faster, and then
+        // be more precise as we get near to the page boundaries
+        var font_step = 10;
+        var fsize = 10;
+        while ( true ) {
+            $inner.css("font-size", fsize+"px");
+            
+            // If we cross the boundary, return to previous size and
+            // decrement the font_step (so at next cycles we can try
+            // to go closer)
+            if ( $inner.width() >= (outer_divw - this.slide_hpadding*2) || $inner.height() >= (outer_divh - this.slide_vpadding*2) ) {
+                fsize -= font_step;
+                $inner.css("font-size", fsize+"px");
+                if ( font_step === 1 ) {
+                    // We're at the end
+                    break;
+                }
+                font_step--;
+            }
+            fsize += font_step;
+        }
     }
 };
 

@@ -3,6 +3,9 @@ Version 0.60 - 2011-11-xx
     - Padding settings now moved to CSS file, so they can be
         * customized without changing the JS file
         * be different from screen to PDF/print version
+    - Fixed ULs and OLs so list markers are inside the div and
+      there's no risk of them crossing boundaries
+    - Some code refactoring/optimization
 
 Version 0.50 - 2011-11-06
     Initial release
