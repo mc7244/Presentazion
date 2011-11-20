@@ -234,7 +234,7 @@ Presentazion = {
                     e.preventDefault();
                     break;
                 case 78: // n
-                    alert("Current slide: " + (this.current_slide+1));
+                    alert("Current slide: " + (this.current_slide+1) +  " / " + (this.max_slide+1));
                     e.preventDefault();
                     break;
                 case 72: // h

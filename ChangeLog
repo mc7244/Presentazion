@@ -1,3 +1,6 @@
+Version CURRENT
+    - Also show total number of slides when pressing "n"
+
 Version 0.60 - 2011-11-18
     - Calculation of font size is now much more precise
     - Padding settings now moved to CSS file, so they can be
