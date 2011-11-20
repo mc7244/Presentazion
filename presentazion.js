@@ -217,7 +217,7 @@ Presentazion = {
                 case 74: // j
                     var nto_str = prompt("Enter slide number to jump to (1-" + (this.max_slide+1) + ")", "1");
                     var nto = parseInt(nto_str);
-                    if ( nto && nto > 0 && nto <= (max_slide+1) ) {
+                    if ( nto && nto > 0 && nto <= (this.max_slide+1) ) {
                         this.change_slide( nto - 1 );
                         e.preventDefault();
                     }
