@@ -1,5 +1,7 @@
 Version CURRENT
     - Also show total number of slides when pressing "n"
+    - Bugfix: only wrap slide children in preprocess_slides_contents(),
+      and not all descendants
 
 Version 0.60 - 2011-11-18
     - Calculation of font size is now much more precise
