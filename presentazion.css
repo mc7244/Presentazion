@@ -19,10 +19,16 @@ body {
 }
 .slide pre {
     display: block;
-    font-family: Courier, monospace;
+    font-family: "Courier New", Courier, monospace;
     font-size: 1em;
     margin-top: 0.1em;
     margin-bottom: 0.1em;
+}
+.slide ol li {
+    list-style-position: inside;
+}
+.slide ul li {
+    list-style-position: inside;
 }
 .slide {
     /* border: 1px solid red; */
@@ -50,12 +56,6 @@ body {
 .ulwrapper {
     text-align: left;
     display: inline-block;
-}
-ol li {
-    list-style-position: inside;
-}
-ul li {
-    list-style-position: inside;
 }
 #mediatype {
     display: none;
