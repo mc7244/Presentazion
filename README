@@ -28,7 +28,5 @@ PDF EXPORT:
     print CSS (sik).
 
 TODO:
-    - improve search (wrap, backwards, ...)
-    - mouse navigation
-    - improve PDF export (resolution choice, ...)
+    See https://github.com/lordarthas/Presentazion/issues
 
