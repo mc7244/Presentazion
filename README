@@ -12,14 +12,13 @@ USAGE:
     open presentazion.html and press "h"
 
 SLIDES CREATION:
-    see source code
-    Multislides: see wiki page on github for specs
+    See https://github.com/lordarthas/Presentazion/wiki/Usage
 
 FEATURES & GOALS:
-    see presentazion.html
+    See presentazion.html
 
 PDF EXPORT:
-    run pdfexport.sh - you need wkhtmltopdf
+    Run pdfexport.sh - you need wkhtmltopdf
     Works as it should, even though at presentt a single resolution is
     supported (but you can tweak the script and the CSS to change that)
 
