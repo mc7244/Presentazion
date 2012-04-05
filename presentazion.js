@@ -1,3 +1,4 @@
+/*global $:false */
 /* Presentazion
    HTML/JS software to present slides in DWIM way
    Version 0.60 - November 11th, 2011
@@ -5,10 +6,10 @@
    License: Artistic (Perl5) or GPL3, at user choice
 */
 
-Presentazion = {
+var Presentazion = (function() {"use strict"; return {
     init : function() {
-        this.slide_vpadding = parseInt( $("#mediatype").css("padding-top") );
-        this.slide_hpadding = parseInt( $("#mediatype").css("padding-left") );
+        this.slide_vpadding = parseInt( $("#mediatype").css("padding-top"), 10 );
+        this.slide_hpadding = parseInt( $("#mediatype").css("padding-left"), 10 );
 
         // Convert multislides to normal slides
         this.preprocess_multislides();
@@ -30,7 +31,7 @@ Presentazion = {
         $(".slide").hide();
         this.bind_keyboard_events();
         $(window).resize($.proxy(function() {
-            this.set_text_size(current_slide);
+            this.set_text_size(this.current_slide);
         }), this);
         this.change_slide(0);
     },
@@ -120,8 +121,8 @@ Presentazion = {
                         }
                         return true;
                     } else {
-                        if ( in_code && line == "" ) {
-                            return; // Code separation
+                        if ( in_code && line === "" ) {
+                            return true; // Code separation
                         }
                         if ( in_code ) {
                             lines[j] += "\n" + '</pre></div>';
@@ -170,6 +171,8 @@ Presentazion = {
                     if ( !line.match("^<") ) {
                         lines[j] = "<p>" + line + "</p>";
                     }
+                    
+                    return true;
                 });
                 // If we closed with code, then add closing tags
                 if ( in_code ) {
@@ -199,8 +202,8 @@ Presentazion = {
                 case 32: // Space
                 case 34: // PgDown
                 case 39: // Right
-                    if ( this.current_slide == this.max_slide ) {
-                        return;
+                    if ( this.current_slide === this.max_slide ) {
+                        return false;
                     }
                     this.change_slide( this.current_slide + 1 );
                     e.preventDefault();
@@ -208,42 +211,43 @@ Presentazion = {
                 case 8:  // Backspace
                 case 33: // PgUp
                 case 37: // Left
-                    if ( this.current_slide == 0 ) {
-                        return;
+                    if ( this.current_slide === 0 ) {
+                        return false;
                     }
                     this.change_slide( this.current_slide - 1 );
                     e.preventDefault();
                     break;
                 case 74: // j
-                    var nto_str = prompt("Enter slide number to jump to (1-" + (this.max_slide+1) + ")", "1");
-                    var nto = parseInt(nto_str);
+                    var nto_str = window.prompt("Enter slide number to jump to (1-" + (this.max_slide+1) + ")", "1");
+                    var nto = parseInt(nto_str, 10);
                     if ( nto && nto > 0 && nto <= (this.max_slide+1) ) {
                         this.change_slide( nto - 1 );
                         e.preventDefault();
                     }
                     break;
                 case 83: // s
-                    this.last_search = prompt("Enter string to search (forward)", this.last_search);
+                    this.last_search = window.prompt("Enter string to search (forward)", this.last_search);
                     var pattern = new RegExp(this.last_search, "i"); // case insensitive
                     $(".slide:gt(" + this.current_slide + ")").each($.proxy(function(i, el) {
                         if ( $(el).text().match(pattern) ) {
                             this.change_slide( this.current_slide + i + 1 );
                             return false;                    
                         }
+                        return true;
                     },this));
                     e.preventDefault();
                     break;
                 case 78: // n
-                    alert("Current slide: " + (this.current_slide+1) +  " / " + (this.max_slide+1));
+                    window.alert("Current slide: " + (this.current_slide+1) +  " / " + (this.max_slide+1));
                     e.preventDefault();
                     break;
                 case 72: // h
-                    alert("COMMANDS\n\n"
-                        + "PgDown/Space/Enter/Right: next slide\n"
-                        + "PgUp/Backspace/Left: previous slide\n"
-                        + "j: jump to page\n"
-                        + "s: search (forward, no wrap)\n"
-                        + "h: this help\n"
+                    window.alert("COMMANDS\n\n" +
+                        "PgDown/Space/Enter/Right: next slide\n" +
+                        "PgUp/Backspace/Left: previous slide\n" +
+                        "j: jump to page\n" +
+                        "s: search (forward, no wrap)\n" +
+                        "h: this help\n"
                     );
                     e.preventDefault();
                     break;
@@ -278,8 +282,9 @@ Presentazion = {
             fsize += font_step;
         }
     }
-};
+};}());
 
 $(function() {
+    "use strict";
     Presentazion.init();
 });
