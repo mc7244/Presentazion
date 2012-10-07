@@ -19,10 +19,10 @@ FEATURES & GOALS:
 
 PDF EXPORT:
     Run pdfexport.sh - you need wkhtmltopdf
-    Works as it should, even though at presentt a single resolution is
+    Works as it should, even though at present a single resolution is
     supported (but you can tweak the script and the CSS to change that)
 
-    If you see weird output, comment out the sceen CSS <link> tag: for some
+    If you see weird output, comment out the screen CSS <link> tag: for some
     reason wkhtmltopdf still uses that even if you tell it to use the
     print CSS (sik).
 
