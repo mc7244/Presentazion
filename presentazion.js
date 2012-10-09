@@ -245,8 +245,9 @@ var Presentazion = (function() {"use strict"; return {
                     window.alert("COMMANDS\n\n" +
                         "PgDown/Space/Enter/Right: next slide\n" +
                         "PgUp/Backspace/Left: previous slide\n" +
-                        "j: jump to page\n" +
+                        "j: jump to slide\n" +
                         "s: search (forward, no wrap)\n" +
+                        "n: show number of current slide\n" +
                         "h: this help\n"
                     );
                     e.preventDefault();
